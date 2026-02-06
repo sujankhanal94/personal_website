@@ -17,16 +17,7 @@
   });
 
 
-	var fullHeight = function() {
-
-		$('.js-fullheight').css('height', $(window).height());
-		$(window).resize(function(){
-			$('.js-fullheight').css('height', $(window).height());
-		});
-
-	};
-	fullHeight();
-
+	
 	// loader
 	var loader = function() {
 		setTimeout(function() { 
@@ -37,10 +28,10 @@
 	};
 	loader();
 
-	// Scrollax
-   $.Scrollax();
-
-
+	// Scrollax - Only on desktop (not mobile)
+   if ($(window).width() > 768) {
+     $.Scrollax();
+   }
 
    // Burger Menu
 	var burgerMenu = function() {
@@ -74,7 +65,7 @@
 	    $('html, body').animate({
 	        scrollTop: $($.attr(this, 'href')).offset().top - 70
 	    }, 500, function() {
-	    	// window.location.hash = href;
+	    	
 	    });
 		});
 
@@ -275,3 +266,17 @@
 
 })(jQuery);
 
+
+
+
+// ===== HARD STOP JS SCROLL HIJACK ON MOBILE =====
+if (window.innerWidth <= 768) {
+
+  // Disable Owl touch handling
+  document.addEventListener('touchmove', function () {}, { passive: true });
+
+  // Remove Stellar & Scrollax
+  if ($.stellar) $(window).stellar('destroy');
+  if ($.Scrollax) $.Scrollax().destroy?.();
+
+}
